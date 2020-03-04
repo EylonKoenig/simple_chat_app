@@ -6,14 +6,14 @@ import io from "socket.io-client";
 import InfoBar from '../InfoBar/InfoBar';
 import Input from "../Input/Input";
 import Messages from "../Messages/Messages";
-import './Chat.css';
 import TextContainer from "../TextContainer/TextContainer";
+import './Chat.css';
 
 
 let socket;
 
 
-const Chat = () => {
+const Chat = ({location}) => {
     const [name, setName] = useState('');
     const [users, setUsers] = useState('');
     const [room, setRoom] = useState('');
@@ -22,7 +22,7 @@ const Chat = () => {
     const ENDPOINT = 'https://simplechat-server.herokuapp.com';
 
     useEffect(() => {
-        const {name, room} = queryString.parse(window.location.search);
+        const { name, room } = queryString.parse(location.search);
 
         socket = io(ENDPOINT);
 
