@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect} from 'react'
 import queryString from 'query-string';
 import io from "socket.io-client";
 
@@ -22,14 +22,14 @@ const Chat = () => {
     const ENDPOINT = 'https://simplechat-server.herokuapp.com';
 
     useEffect(() => {
-        const { name, room } = queryString.parse(window.location.search);
+        const {name, room} = queryString.parse(window.location.search);
 
         socket = io(ENDPOINT);
 
         setName(name);
         setRoom(room);
 
-        socket.emit('join', { name, room }, (error) => {
+        socket.emit('join', {name, room}, (error) => {
             if (error) alert(error)
         });
 
@@ -44,7 +44,7 @@ const Chat = () => {
         socket.on('message', (message) => {
             setMessages([...messages, message])
         });
-        socket.on('roomData', ({ users }) => {
+        socket.on('roomData', ({users}) => {
             setUsers(users);
         });
     }, [messages]);
@@ -55,25 +55,15 @@ const Chat = () => {
             socket.emit('sendMessage', message, () => setMessage(''));
         }
     };
-    return ( <
-        div className = { 'outerContainer' } >
-        <
-        div className = { 'container' } >
-        <
-        InfoBar room = { room }
-        /> <
-        Messages messages = { messages }
-        name = { name }
-        /> <
-        Input message = { message }
-        setMessage = { setMessage }
-        sendMessage = { sendMessage }
-        /> <
-        /div> <
-        TextContainer users = { users }
-        /> <
-        /div>
-    )
-};
+    return (
+        <div className={'outerContainer'}>
+            <div className={'container'}>
+                <InfoBar room={room}/>
+                <Messages messages={messages} name={name}/>
+                <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
+            </div>
+            <TextContainer users={users}/>
+        </div>
+)};
 
 export default Chat;
